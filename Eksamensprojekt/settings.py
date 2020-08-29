@@ -1,0 +1,51 @@
+# game options/settings
+TITLE = "Ninja Wall Jump!"
+WIDTH = 420
+HEIGHT = 600
+FPS = 60
+FONT_NAME = 'arial'
+HS_FILE = "highscore.txt"
+MUSIC_VOLUME = 0.5
+
+# Player properties
+PLAYER_ACC = 0.5
+PLAYER_FRICTION = -0.12
+PLAYER_WALL_FRICTION = 2.5
+PLAYER_GRAV = 0.8
+PLAYER_JUMP = 20
+PLAYER_IMG_WIDTH = 11
+PLAYER_IMG_HEIGHT = 15
+PLAYER_SCALE = 4
+
+# Game properties
+BOOST_POWER = 60
+BOOST_IMG_WIDTH = 70
+BOOST_IMG_HEIGHT = 70
+POWERUP_SPAWN_PCT = 7
+MOB_FREQ = 5000
+MOB_IMG_WIDTH = 352
+MOB_IMG_HEIGHT = 136
+
+PLAYER_LAYER = 2
+PLATFORM_LAYER = 1
+POWERUP_LAYER = 1
+MOB_LAYER = 2
+
+# Starting platforms
+PLATFORM_LIST = [(WIDTH / 2 - 50, HEIGHT - 40),
+                 (WIDTH / 2 - 50, 400),
+                 (125, HEIGHT - 350),
+                 (175, 100)]
+LEFT_WALL_PLATFORM_LIST = [(0, 0)]
+RIGHT_WALL_PLATFORM_LIST = [(WIDTH - 42, 0)]
+
+# define colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
+LIGHTBLUE = (0, 155, 155)
+DARKBLUE = (8, 105, 107)
+BGCOLOR = DARKBLUE
