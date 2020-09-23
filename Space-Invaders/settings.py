@@ -9,3 +9,7 @@ FONT_NAME = 'arial'
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BGCOLOR = WHITE
+
+# image properties
+LOGO_WIDHT = 500
+LOGO_HEIGHT = 210
