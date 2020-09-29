@@ -1,7 +1,7 @@
 # game options/settings
-TITLE = "Space Invaders"
-WIDTH = 680
-HEIGHT = 940
+TITLE = "Asteroids"
+WIDTH = 1920
+HEIGHT = 1080
 FPS = 60
 FONT_NAME = 'arial'
 

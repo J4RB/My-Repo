@@ -7,7 +7,7 @@ class Game:
         pg.init()
 
         # Game window
-        self.screen = pg.display.set_mode((WIDTH, HEIGHT))
+        self.screen = pg.display.set_mode((WIDTH, HEIGHT), pg.FULLSCREEN)
         pg.display.set_caption(TITLE)
         #pg.display.set_icon(pg.image.load('./images/icon.png'))
         
@@ -22,7 +22,6 @@ class Game:
         self.font_name = pg.font.match_font(FONT_NAME)
 
         # load images
-        self.logo = pg.image.load('./image/logo.png')
 
     
     def new(self):
@@ -62,7 +61,6 @@ class Game:
     def show_start_screen(self):
         # game splash/start screen
         self.screen.fill(BGCOLOR)
-        self.screen.blit(self.logo, (WIDTH / 2 - LOGO_WIDTH / 2, HEIGHT / 2 - LOGO_HEIGHT / 2))
 
         pg.display.flip()
         self.wait_for_key()
