@@ -50,6 +50,12 @@ class Game:
                 if self.playing:
                     self.playing = False
                 self.running = False
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    if self.playing:
+                        self.playing = False
+                    self.running = False
+                        
 
 
     def draw(self):

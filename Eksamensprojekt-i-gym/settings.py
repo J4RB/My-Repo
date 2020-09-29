@@ -4,7 +4,6 @@ WIDTH = 420
 HEIGHT = 600
 FPS = 60
 FONT_NAME = 'arial'
-HS_FILE =self.screen.blit(self.player_sprite_menu, (WIDTH / 2 - PLAYER_IMG_WIDTH * 12 / 2 + 10, HEIGHT / 2 - PLAYER_IMG_HEIGHT * 12 / 2 + 30)) "highscore.txt"
 MUSIC_VOLUME = 0.5
 
 # Player properties
