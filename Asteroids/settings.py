@@ -8,6 +8,7 @@ FONT_NAME = 'arial'
 # define colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+RED = (255, 0, 0)
 BGCOLOR = WHITE
 
 # image properties

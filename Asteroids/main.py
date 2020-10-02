@@ -55,12 +55,13 @@ class Game:
                     if self.playing:
                         self.playing = False
                     self.running = False
-                        
 
 
     def draw(self):
         # Game Loop - draw
         # *after* drawing everything, flip the display
+        self.screen.fill((BLACK))
+        
         pg.display.flip()
 
 
@@ -106,9 +107,9 @@ class Game:
 
 
 g = Game()
-g.show_start_screen()
+#g.show_start_screen()
 while g.running:
     g.new()
-    g.show_go_screen()
+    #g.show_go_screen()
 
 pg.quit()
