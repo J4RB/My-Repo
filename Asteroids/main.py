@@ -7,9 +7,9 @@ class Game:
         pg.init()
 
         # Game window
-        self.screen = pg.display.set_mode((WIDTH, HEIGHT), pg.FULLSCREEN)
+        self.screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pg.FULLSCREEN)
         pg.display.set_caption(TITLE)
-        #pg.display.set_icon(pg.image.load('./images/icon.png'))
+        pg.display.set_icon(pg.image.load('./images/spaceship.png'))
         
         # Game starting stage
         self.clock = pg.time.Clock()
@@ -25,6 +25,10 @@ class Game:
 
     
     def new(self):
+        self.all_sprites = pg.sprite.Group()
+        self.player = Player()
+        self.all_sprites.add(self.player)
+
         self.run()
 
 
@@ -39,17 +43,14 @@ class Game:
 
 
     def update(self):
-        pass
+        # Game loop - Update
+        self.all_sprites.update()
 
 
     def events(self):
     # Game Loop - events
         for event in pg.event.get():
             # check for closing window
-            if event.type == pg.QUIT:
-                if self.playing:
-                    self.playing = False
-                self.running = False
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     if self.playing:
@@ -61,6 +62,7 @@ class Game:
         # Game Loop - draw
         # *after* drawing everything, flip the display
         self.screen.fill((BLACK))
+        self.all_sprites.draw(self.screen)
         
         pg.display.flip()
 
@@ -80,7 +82,7 @@ class Game:
 
         # draw
         self.screen.fill(BGCOLOR)
-        self.draw_text("GAME OVER", 48, WHITE, WIDTH / 2, HEIGHT / 10)
+        self.draw_text("GAME OVER", 48, WHITE, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 10)
 
         pg.display.flip()
         self.wait_for_key()
