@@ -7,15 +7,14 @@ class Game:
 
         # Game window
         self.load_settings()
+        self.load_data()
         self.screen = pg.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT), pg.FULLSCREEN)
         pg.display.set_caption(self.TITLE)
-        pg.display.set_icon(pg.image.load('./images/spaceship.png'))
+        pg.display.set_icon(self.icon_image)
         
         # Game starting stage
         self.clock = pg.time.Clock()
         self.running = True
-
-        self.load_data()
 
 
     def load_settings(self):
@@ -24,7 +23,6 @@ class Game:
         self.SCREEN_WIDTH = 1920
         self.SCREEN_HEIGHT = 1080
         self.FPS = 60
-        self.FONT_NAME = 'arial'
 
         # define colors
         self.WHITE = (255, 255, 255)
@@ -34,11 +32,10 @@ class Game:
 
 
     def load_data(self):
-        self.font_name = pg.font.match_font(self.FONT_NAME)
-
         # load images
-
+        self.icon_image = pg.image.load('./images/spaceship.png')
     
+
     def new(self):
         self.all_sprites = pg.sprite.Group()
         self.player = Player()
