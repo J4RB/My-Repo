@@ -7,8 +7,8 @@ class Player(pg.sprite.Sprite):
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
         self.load_settings()
-        self.image = pg.Surface((self.PLAYER_IMG_WIDTH, self.PLAYER_IMG_HEIGHT))
         self.load_images()
+        self.image = pg.Surface((self.PLAYER_IMG_WIDTH, self.PLAYER_IMG_HEIGHT))
         self.image = self.player_sprite
         self.rect = self.image.get_rect()
         self.rect.center = (self.SCREEN_WIDTH / 2, self.SCREEN_HEIGHT / 2)

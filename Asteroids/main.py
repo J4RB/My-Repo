@@ -7,7 +7,7 @@ class Game:
 
         # Game window
         self.load_settings()
-        self.load_data()
+        self.load_images()
         self.screen = pg.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT), pg.FULLSCREEN)
         pg.display.set_caption(self.TITLE)
         pg.display.set_icon(self.icon_image)
@@ -31,7 +31,7 @@ class Game:
         self.BGCOLOR = self.WHITE
 
 
-    def load_data(self):
+    def load_images(self):
         # load images
         self.icon_image = pg.image.load('./images/spaceship.png')
     
