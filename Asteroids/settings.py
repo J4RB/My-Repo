@@ -14,7 +14,7 @@ PLAYER_TURN_RATE = 3
 
 # define colors
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
+BLACK = (15, 15, 15)
 RED = (255, 0, 0)
 BGCOLOR = WHITE
 
