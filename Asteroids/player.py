@@ -17,7 +17,7 @@ class Player(pg.sprite.Sprite):
         self.pos = vec(self.SCREEN_WIDTH /2, self.SCREEN_HEIGHT / 2)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
-        self.rotation = 0
+        self.rotation = 90
 
 
     def load_settings(self):
@@ -45,15 +45,14 @@ class Player(pg.sprite.Sprite):
         return new_image, rect
 
 
-    def update(self):
-        self.acc = vec(0, 0)
+    def ship_rotation(self):
         keys = pg.key.get_pressed()
-
         # Player keys for rotation
         if keys[pg.K_LEFT]:
             self.rotation += self.PLAYER_TURN_RATE
         if keys[pg.K_RIGHT]:
             self.rotation -= self.PLAYER_TURN_RATE
+
         # Make sure player rotation angel is not larger than 360 and smaller than 0
         if self.rotation > 360:
             self.rotation -= 360
@@ -62,22 +61,27 @@ class Player(pg.sprite.Sprite):
         # Run the funktion 'rotate' in order to rotate the player
         self.image, self.rect = self.rotate(self.org_image, self.rect, self.rotation - 90)
 
+
+    def thrust(self):
         # Move player in direction faceing
         # Convert degrees to radians
         self.rotation = (self.rotation * math.pi) / 180
         # Determine the direction the player is faceing and accelerate
         thrust = vec(math.cos(self.rotation), -math.sin(self.rotation))
         # Thrust when key up pressed
-        if keys[pg.K_UP]:
-            self.vel += thrust * 0.1
+        self.vel += thrust * 0.1
         # Convert radians back to degrees
         self.rotation = (self.rotation * 180) / math.pi
 
+
+    def update(self):
+        self.acc = vec(0, 0)
         # apply friction
         self.acc += self.vel * self.PLAYER_FRICTION
         # equations of motion
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
+        
         # wrap around the sides of the screen
         if self.pos.x > self.SCREEN_WIDTH:
             self.pos.x = 0

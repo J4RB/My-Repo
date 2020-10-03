@@ -62,12 +62,19 @@ class Game:
     def events(self):
     # Game Loop - events
         for event in pg.event.get():
-            # check for closing window
-            if event.type == pg.KEYDOWN:
+            if event.type == pg.KEYDOWN: # ændre så rotate og thrust ikke er keydown, men altid sker altså bare key
+                # check for closing window
                 if event.key == pg.K_ESCAPE:
                     if self.playing:
                         self.playing = False
                     self.running = False
+
+        keys = pg.key.get_pressed()
+        if keys[pg.K_UP]:
+            # Anitmate thrust
+            self.player.thrust()
+        if keys[pg.K_LEFT] or keys[pg.K_RIGHT]:
+            self.player.ship_rotation()
 
 
     def draw(self):
