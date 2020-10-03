@@ -18,7 +18,9 @@ class Player(pg.sprite.Sprite):
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
         self.rotation = 90
-
+        self.thrusting = False
+        self.current_frame = 0
+        
 
     def load_settings(self):
        # game options/settings
@@ -35,6 +37,15 @@ class Player(pg.sprite.Sprite):
 
     def load_images(self):
         self.player_sprite = pg.image.load('./images/spaceship.png')
+        self.player_sprite_thrust = [pg.image.load('./images/spaceship_thrust.png')]
+
+
+    def animate(self):
+        now = pg.time.get_ticks()
+        keys = pg.key.get_pressed()
+        if self.thrusting:
+            self.current_frame = (self.current_frame + 1) % len(self.player_sprite_thrust)
+            self.image = self.player_sprite_thrust[self.current_frame]
 
 
     def rotate(self, image, rect, angle): # Rotate the image while keeping its center.
@@ -75,13 +86,14 @@ class Player(pg.sprite.Sprite):
 
 
     def update(self):
+        self.animate()
         self.acc = vec(0, 0)
         # apply friction
         self.acc += self.vel * self.PLAYER_FRICTION
         # equations of motion
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
-        
+
         # wrap around the sides of the screen
         if self.pos.x > self.SCREEN_WIDTH:
             self.pos.x = 0
