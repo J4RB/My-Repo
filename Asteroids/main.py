@@ -1,5 +1,4 @@
 import pygame as pg
-from settings import *
 from player import *
 
 class Game:
@@ -7,8 +6,9 @@ class Game:
         pg.init()
 
         # Game window
-        self.screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pg.FULLSCREEN)
-        pg.display.set_caption(TITLE)
+        self.load_settings()
+        self.screen = pg.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT), pg.FULLSCREEN)
+        pg.display.set_caption(self.TITLE)
         pg.display.set_icon(pg.image.load('./images/spaceship.png'))
         
         # Game starting stage
@@ -18,8 +18,23 @@ class Game:
         self.load_data()
 
 
+    def load_settings(self):
+        # game options/settings
+        self.TITLE = "Asteroids"
+        self.SCREEN_WIDTH = 1920
+        self.SCREEN_HEIGHT = 1080
+        self.FPS = 60
+        self.FONT_NAME = 'arial'
+
+        # define colors
+        self.WHITE = (255, 255, 255)
+        self.BLACK = (15, 15, 15)
+        self.RED = (255, 0, 0)
+        self.BGCOLOR = self.WHITE
+
+
     def load_data(self):
-        self.font_name = pg.font.match_font(FONT_NAME)
+        self.font_name = pg.font.match_font(self.FONT_NAME)
 
         # load images
 
@@ -36,7 +51,7 @@ class Game:
         # Game Loop
         self.playing = True
         while self.playing:
-            self.clock.tick(FPS)
+            self.clock.tick(self.FPS)
             self.events()
             self.update()
             self.draw()
@@ -61,7 +76,7 @@ class Game:
     def draw(self):
         # Game Loop - draw
         # *after* drawing everything, flip the display
-        self.screen.fill((BLACK))
+        self.screen.fill((self.BLACK))
         self.all_sprites.draw(self.screen)
         
         pg.display.flip()
@@ -69,7 +84,7 @@ class Game:
 
     def show_start_screen(self):
         # game splash/start screen
-        self.screen.fill(BGCOLOR)
+        self.screen.fill(self.BGCOLOR)
 
         pg.display.flip()
         self.wait_for_key()
@@ -81,8 +96,8 @@ class Game:
             return  # means end this funktion
 
         # draw
-        self.screen.fill(BGCOLOR)
-        self.draw_text("GAME OVER", 48, WHITE, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 10)
+        self.screen.fill(self.BGCOLOR)
+        self.draw_text("GAME OVER", 48, self.WHITE, self.SCREEN_WIDTH / 2, self.SCREEN_HEIGHT / 10)
 
         pg.display.flip()
         self.wait_for_key()
@@ -91,7 +106,7 @@ class Game:
     def wait_for_key(self):
         waiting = True
         while waiting:
-            self.clock.tick(FPS)
+            self.clock.tick(self.FPS)
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     waiting = False

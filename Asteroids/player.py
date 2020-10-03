@@ -1,23 +1,36 @@
 import pygame as pg
 import math
-from settings import *
 
 vec = pg.math.Vector2
 
 class Player(pg.sprite.Sprite):
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
-        self.image = pg.Surface((PLAYER_IMG_WIDTH, PLAYER_IMG_HEIGHT))
+        self.load_settings()
+        self.image = pg.Surface((self.PLAYER_IMG_WIDTH, self.PLAYER_IMG_HEIGHT))
         self.load_images()
         self.image = self.player_sprite
         self.rect = self.image.get_rect()
-        self.rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        self.rect.center = (self.SCREEN_WIDTH / 2, self.SCREEN_HEIGHT / 2)
         self.org_image = self.image
 
-        self.pos = vec(SCREEN_WIDTH /2, SCREEN_HEIGHT / 2)
+        self.pos = vec(self.SCREEN_WIDTH /2, self.SCREEN_HEIGHT / 2)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
         self.rotation = 0
+
+
+    def load_settings(self):
+       # game options/settings
+        self.SCREEN_WIDTH = 1920
+        self.SCREEN_HEIGHT = 1080
+
+       # player properties
+        self.PLAYER_IMG_WIDTH = 29
+        self.PLAYER_IMG_HEIGHT = 32
+        self.PLAYER_ACC = 0.5
+        self.PLAYER_FRICTION = -0.009
+        self.PLAYER_TURN_RATE = 3
 
 
     def load_images(self):
@@ -38,9 +51,9 @@ class Player(pg.sprite.Sprite):
 
         # Player keys for rotation
         if keys[pg.K_LEFT]:
-            self.rotation += PLAYER_TURN_RATE
+            self.rotation += self.PLAYER_TURN_RATE
         if keys[pg.K_RIGHT]:
-            self.rotation -= PLAYER_TURN_RATE
+            self.rotation -= self.PLAYER_TURN_RATE
         # Make sure player rotation angel is not larger than 360 and smaller than 0
         if self.rotation > 360:
             self.rotation -= 360
@@ -61,18 +74,18 @@ class Player(pg.sprite.Sprite):
         self.rotation = (self.rotation * 180) / math.pi
 
         # apply friction
-        self.acc += self.vel * PLAYER_FRICTION
+        self.acc += self.vel * self.PLAYER_FRICTION
         # equations of motion
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
         # wrap around the sides of the screen
-        if self.pos.x > SCREEN_WIDTH:
+        if self.pos.x > self.SCREEN_WIDTH:
             self.pos.x = 0
         if self.pos.x < 0:
-            self.pos.x = SCREEN_WIDTH
-        if self.pos.y > SCREEN_HEIGHT:
+            self.pos.x = self.SCREEN_WIDTH
+        if self.pos.y > self.SCREEN_HEIGHT:
             self.pos.y = 0
         if self.pos.y < 0:
-            self.pos.y = SCREEN_HEIGHT
+            self.pos.y = self.SCREEN_HEIGHT
 
         self.rect.center = self.pos
