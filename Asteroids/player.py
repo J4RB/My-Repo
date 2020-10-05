@@ -42,7 +42,6 @@ class Player(pg.sprite.Sprite):
 
     def animate(self):
         now = pg.time.get_ticks()
-        keys = pg.key.get_pressed()
         if self.thrusting:
             self.current_frame = (self.current_frame + 1) % len(self.player_sprite_thrust)
             self.image = self.player_sprite_thrust[self.current_frame]
