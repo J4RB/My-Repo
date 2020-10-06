@@ -64,7 +64,7 @@ class Game:
         for event in pg.event.get():
             if event.type == pg.KEYDOWN:
                 # check for closing window
-                if event.key == pg.QUIT or pg.K_ESCAPE:
+                if event.key == pg.K_ESCAPE:
                     if self.playing:
                         self.playing = False
                     self.running = False
