@@ -8,7 +8,7 @@ class Game:
         # Game window
         self.load_settings()
         self.load_images()
-        self.screen = pg.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT), pg.FULLSCREEN)
+        self.screen = pg.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))#, pg.FULLSCREEN)
         pg.display.set_caption(self.TITLE)
         pg.display.set_icon(self.icon_image)
         
@@ -69,14 +69,12 @@ class Game:
                         self.playing = False
                     self.running = False
 
-                if event.key == pg.K_UP:
-                    self.player.thrusting = True
-                else:
-                    self.player.thrusting = False
-
         keys = pg.key.get_pressed()
         if keys[pg.K_UP]:
+            self.player.thrusting = True
             self.player.thrust()
+        else:
+            self.player.thrusting = False
         if keys[pg.K_LEFT] or keys[pg.K_RIGHT]:
             self.player.ship_rotation()
 

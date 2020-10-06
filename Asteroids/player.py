@@ -13,6 +13,7 @@ class Player(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (self.SCREEN_WIDTH / 2, self.SCREEN_HEIGHT / 2)
         self.org_image = self.image
+        self.current_image = self.image
 
         self.pos = vec(self.SCREEN_WIDTH /2, self.SCREEN_HEIGHT / 2)
         self.vel = vec(0, 0)
@@ -37,15 +38,22 @@ class Player(pg.sprite.Sprite):
 
     def load_images(self):
         self.player_sprite = pg.image.load('./images/spaceship.png')
-        self.player_sprite_thrust = [pg.image.load('./images/spaceship_thrust.png')]
+        self.player_sprite_thrust = pg.image.load('./images/spaceship_thrust.png')
 
 
-    def animate(self):
-        now = pg.time.get_ticks()
-        keys = pg.key.get_pressed()
+    def state(self):
         if self.thrusting:
-            self.current_frame = (self.current_frame + 1) % len(self.player_sprite_thrust)
-            self.image = self.player_sprite_thrust[self.current_frame]
+            self.current_image = self.player_sprite_thrust
+        else:
+            self.current_image = self.player_sprite
+
+
+    # def animate(self):
+    #     now = pg.time.get_ticks()
+    #     keys = pg.key.get_pressed()
+    #     if self.thrusting:
+    #         self.current_frame = (self.current_frame + 1) % len(self.player_sprite_thrust)
+    #         self.image = self.player_sprite_thrust[self.current_frame]
 
 
     def rotate(self, image, rect, angle): # Rotate the image while keeping its center.
@@ -69,8 +77,10 @@ class Player(pg.sprite.Sprite):
             self.rotation -= 360
         elif self.rotation < 0:
             self.rotation += 360
+        
+        self.state()
         # Run the funktion 'rotate' in order to rotate the player
-        self.image, self.rect = self.rotate(self.org_image, self.rect, self.rotation - 90)
+        self.image, self.rect = self.rotate(self.current_image, self.rect, self.rotation - 90)
 
 
     def thrust(self):
@@ -86,7 +96,7 @@ class Player(pg.sprite.Sprite):
 
 
     def update(self):
-        self.animate()
+        #self.animate()
         self.acc = vec(0, 0)
         # apply friction
         self.acc += self.vel * self.PLAYER_FRICTION
