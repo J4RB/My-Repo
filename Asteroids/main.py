@@ -8,7 +8,7 @@ class Game:
         # Game window
         self.load_settings()
         self.load_images()
-        self.screen = pg.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))#, pg.FULLSCREEN)
+        self.screen = pg.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT), pg.FULLSCREEN)
         pg.display.set_caption(self.TITLE)
         pg.display.set_icon(self.icon_image)
         
@@ -62,6 +62,11 @@ class Game:
     def events(self):
     # Game Loop - events
         for event in pg.event.get():
+            # check for quiting game
+            if event.type == pg.QUIT:
+                if self.playing:
+                    self.playing = False
+                self.running = False
             if event.type == pg.KEYDOWN:
                 # check for closing window
                 if event.key == pg.K_ESCAPE:

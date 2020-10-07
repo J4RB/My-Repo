@@ -33,7 +33,7 @@ class Player(pg.sprite.Sprite):
         self.PLAYER_IMG_HEIGHT = 32
         self.PLAYER_ACC = 0.5
         self.PLAYER_FRICTION = -0.009
-        self.PLAYER_TURN_RATE = 3
+        self.PLAYER_TURN_RATE = 2
 
 
     def load_images(self):
@@ -114,4 +114,6 @@ class Player(pg.sprite.Sprite):
         if self.pos.y < 0:
             self.pos.y = self.SCREEN_HEIGHT
 
+        self.state()
+        self.ship_rotation()
         self.rect.center = self.pos
