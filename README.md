@@ -1,2 +1,2 @@
 # Private-GitHub
-This is my GitHub repo with random projects.
+This is my private GitHub repository with random projects I'm working on.
