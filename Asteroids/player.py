@@ -31,9 +31,10 @@ class Player(pg.sprite.Sprite):
        # player properties
         self.PLAYER_IMG_WIDTH = 29
         self.PLAYER_IMG_HEIGHT = 32
-        self.PLAYER_ACC = 0.5
+        self.PLAYER_ACC = 0.01
         self.PLAYER_FRICTION = -0.009
-        self.PLAYER_TURN_RATE = 2
+        self.PLAYER_TURN_RATE = 0.8
+        self.PLAYER_THRUST_MULTIPIER = 0.05
 
 
     def load_images(self):
@@ -90,7 +91,7 @@ class Player(pg.sprite.Sprite):
         # Determine the direction the player is faceing and accelerate
         thrust = vec(math.cos(self.rotation), -math.sin(self.rotation))
         # Thrust when key up pressed
-        self.vel += thrust * 0.1
+        self.vel += thrust * self.PLAYER_THRUST_MULTIPIER
         # Convert radians back to degrees
         self.rotation = (self.rotation * 180) / math.pi
 

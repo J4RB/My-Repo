@@ -22,7 +22,7 @@ class Game:
         self.TITLE = "Asteroids"
         self.SCREEN_WIDTH = 1920
         self.SCREEN_HEIGHT = 1080
-        self.FPS = 60
+        self.FPS = 120
 
         # define colors
         self.WHITE = (255, 255, 255)
