@@ -25,8 +25,8 @@ class Player(pg.sprite.Sprite):
 
     def load_settings(self):
        # game options/settings
-        self.SCREEN_WIDTH = 1920
-        self.SCREEN_HEIGHT = 1080
+        self.SCREEN_WIDTH = 1802
+        self.SCREEN_HEIGHT = 980
 
        # player properties
         self.PLAYER_IMG_WIDTH = 29
@@ -95,16 +95,7 @@ class Player(pg.sprite.Sprite):
         # Convert radians back to degrees
         self.rotation = (self.rotation * 180) / math.pi
 
-
-    def update(self):
-        #self.animate()
-        self.acc = vec(0, 0)
-        # apply friction
-        self.acc += self.vel * self.PLAYER_FRICTION
-        # equations of motion
-        self.vel += self.acc
-        self.pos += self.vel + 0.5 * self.acc
-
+    def boarderCollisionCheck(self):
         # wrap around the sides of the screen
         if self.pos.x > self.SCREEN_WIDTH:
             self.pos.x = 0
@@ -115,6 +106,16 @@ class Player(pg.sprite.Sprite):
         if self.pos.y < 0:
             self.pos.y = self.SCREEN_HEIGHT
 
+    def update(self):
+        #self.animate()
+        self.acc = vec(0, 0)
+        # apply friction
+        self.acc += self.vel * self.PLAYER_FRICTION
+        # equations of motion
+        self.vel += self.acc
+        self.pos += self.vel + 0.5 * self.acc
+
+        self.boarderCollisionCheck()
         self.state()
         self.ship_rotation()
         self.rect.center = self.pos
