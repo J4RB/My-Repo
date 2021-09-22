@@ -1,5 +1,6 @@
 import pygame as pg
 from player import *
+from button import *
 from math import floor
 #from pygame import K_SPACE
 
@@ -21,25 +22,37 @@ class Game:
         self.clock = pg.time.Clock()
         self.running = True
 
-
     def load_settings(self):
         # game options/settings
         self.TITLE = "Asteroids"
         self.SCREEN_WIDTH = 1802
         self.SCREEN_HEIGHT = 980
         self.FPS = 120
-        self.FULLSCREEN_MODE = True
+        self.FULLSCREEN_MODE = False
 
         # define colors
         self.WHITE = (255, 255, 255)
         self.BLACK = (15, 15, 15)
 
         # define font
-        self.font_name = "Century Gothic"
+        self.font_name = 'Century Gothic'
 
     def load_images(self):
         # load images
         self.icon_image = pg.image.load('./images/spaceship.png')
+
+    def create_buttons(self):
+        # creates the buttons
+        self.all_buttons = pg.sprite.Group()
+
+        btn_font_size = floor((self.SCREEN_WIDTH + self.SCREEN_HEIGHT) / 75)
+        menu_btn_font = pg.font.SysFont(self.font_name, btn_font_size)
+        self.options_button = Button(
+            320, 70, 170, 65, self.show_options_screen,
+            menu_btn_font, 'OPTIONS', self.WHITE,
+            IMAGE_NORMAL, IMAGE_HOVER, IMAGE_DOWN)
+
+        self.all_buttons.add(self.options_button)
     
 
     def new(self):
@@ -63,6 +76,7 @@ class Game:
     def update(self):
         # Game loop - Update
         self.all_sprites.update()
+        self.all_buttons.update()
 
 
     def events(self):
@@ -79,6 +93,9 @@ class Game:
                     if self.playing:
                         self.playing = False
                     self.running = False
+
+            for button in self.all_buttons:
+                button.handle_event(event)
                 
         keys = pg.key.get_pressed()
         if keys[pg.K_UP]:
@@ -105,11 +122,23 @@ class Game:
         self.draw_text("ASTEROIDS", floor((self.SCREEN_WIDTH + self.SCREEN_HEIGHT) / 18), self.WHITE, floor(self.SCREEN_WIDTH / 2), floor(self.SCREEN_HEIGHT / 4))
         self.draw_text("PRESS SPACE TO PLAY", floor((self.SCREEN_WIDTH + self.SCREEN_HEIGHT) / 75), self.WHITE, floor(self.SCREEN_WIDTH / 2), floor(self.SCREEN_HEIGHT / 2.3))
 
-        self.draw_text("OPTIONS", floor((self.SCREEN_WIDTH + self.SCREEN_HEIGHT) / 75), self.WHITE, self.SCREEN_WIDTH / 2, floor(self.SCREEN_HEIGHT / 1.8))
+        #self.draw_text("OPTIONS", floor((self.SCREEN_WIDTH + self.SCREEN_HEIGHT) / 75), self.WHITE, floor(self.SCREEN_WIDTH / 2), floor(self.SCREEN_HEIGHT / 1.8))
+        self.create_buttons()
 
         pg.display.flip()
         self.wait_for_key(pg.K_SPACE)
 
+    def show_options_screen(self):
+        # options screen
+        if not self.running: # quit means quit and not go-screen
+            return  # means end this funktion
+
+        self.screen.fill(self.BLACK)
+        self.draw_text("OPTIONS", 48, self.WHITE, self.SCREEN_WIDTH / 2, self.SCREEN_HEIGHT / 10)
+
+        pg.display.flip()
+        # TODO: Use different key than space, maybe escape
+        self.wait_for_key(pg.K_SPACE)
     
     def show_go_screen(self):
         # game over/continue
