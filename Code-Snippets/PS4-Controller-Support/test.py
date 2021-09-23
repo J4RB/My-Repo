@@ -19,6 +19,7 @@ color = 0
 joysticks = []
 for i in range(pygame.joystick.get_count()):
     joysticks.append(pygame.joystick.Joystick(i))
+print("Joysticks: {}".format(joysticks))
 for joystick in joysticks:
     joystick.init()
 
@@ -26,7 +27,7 @@ with open(os.path.join("ps4_keys.json"), 'r+') as file:
     button_keys = json.load(file)
 # 0: Left analog horizonal, 1: Left Analog Vertical, 2: Right Analog Horizontal
 # 3: Right Analog Vertical 4: Left Trigger, 5: Right Trigger
-analog_keys = {0:0, 1:0, 2:0, 3:0, 4:-1, 5: -1 }
+analog_keys = {0:0, 1:0, 2:0, 3:0, 4:-1, 5: -1}
 
 # START OF GAME LOOP
 while running:
@@ -48,6 +49,30 @@ while running:
                 DOWN = True
             if event.button == button_keys['up_arrow']:
                 UP = True
+            if event.button == button_keys['x']:
+                print("Button {} working!".format('x'))
+            if event.button == button_keys['circle']:
+                print("Button {} working!".format('circle'))
+            if event.button == button_keys['square']:
+                print("Button {} working!".format('square'))
+            if event.button == button_keys['triangle']:
+                print("Button {} working!".format('triangle'))
+            if event.button == button_keys['share']:
+                print("Button {} working!".format('share'))
+            if event.button == button_keys['PS']:
+                print("Button {} working!".format('PS'))
+            if event.button == button_keys['options']:
+                print("Button {} working!".format('options'))
+            if event.button == button_keys['left_stick_click']:
+                print("Button {} working!".format('left_stick_click'))
+            if event.button == button_keys['right_stick_click']:
+                print("Button {} working!".format('right_stick_click'))
+            if event.button == button_keys['L1']:
+                print("Button {} working!".format('L1'))
+            if event.button == button_keys['R1']:
+                print("Button {} working!".format('R1'))
+            if event.button == button_keys['touchpad']:
+                print("Button {} working!".format('touchpad'))
         # HANDLES BUTTON RELEASES
         if event.type == pygame.JOYBUTTONUP:
             if event.button == button_keys['left_arrow']:
@@ -83,7 +108,8 @@ while running:
                     DOWN = True
                 else:
                     DOWN = False
-                # Triggers
+                
+            # Triggers
             if analog_keys[4] > 0:  # Left trigger
                 color += 2
             if analog_keys[5] > 0:  # Right Trigger
