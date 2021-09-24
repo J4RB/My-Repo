@@ -1,35 +1,44 @@
 import pygame
 from menu import *
 
-
 class Game():
     def __init__(self):
         pygame.init()
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
-        self.DISPLAY_W, self.DISPLAY_H = 480, 270
-        self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
-        self.window = pygame.display.set_mode(((self.DISPLAY_W,self.DISPLAY_H)))
+        self.DISPLAY_W, self.DISPLAY_H = 1920, 1080
+        #self.DISPLAY_W, self.DISPLAY_H = 1080, 720
+        #self.DISPLAY_W, self.DISPLAY_H = 480, 360
+        #self.DISPLAY_W, self.DISPLAY_H = 240, 180
+        self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
+        self.window = pygame.display.set_mode(((self.DISPLAY_W, self.DISPLAY_H)))
+        pygame.display.set_caption("Asteroids")
+        #pygame.window.set_icon(self.icon_image)
         self.font_name = 'Century Gothic'
-        #self.font_name = pygame.font.get_default_font()
-        self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
+        self.BLACK, self.WHITE = (15, 15, 15), (255, 255, 255)
         self.main_menu = MainMenu(self)
         self.options = OptionsMenu(self)
         self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
 
+    def new(self):
+        self.all_sprites = pygame.sprite.Group()
+        #self.player = Player()
+        #self.all_sprites.add(self.player)
+
+        self.game_loop()
+
     def game_loop(self):
         while self.playing:
             self.check_events()
             if self.START_KEY:
-                self.playing= False
-            self.display.fill(self.BLACK)
-            self.draw_text('Thanks for Playing', 20, self.DISPLAY_W/2, self.DISPLAY_H/2)
+                self.playing = False
+            self.draw()
+            self.update()
+            
             self.window.blit(self.display, (0,0))
             pygame.display.update()
             self.reset_keys()
-
-
 
     def check_events(self):
         for event in pygame.event.get():
@@ -39,7 +48,7 @@ class Game():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     self.START_KEY = True
-                if event.key == pygame.K_BACKSPACE:
+                if event.key == pygame.K_ESCAPE:
                     self.BACK_KEY = True
                 if event.key == pygame.K_DOWN:
                     self.DOWN_KEY = True
@@ -48,6 +57,15 @@ class Game():
 
     def reset_keys(self):
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
+    
+    def draw(self):
+        self.display.fill(self.BLACK)
+        #self.all_sprites.draw(self.display)
+        self.draw_text('Thanks for Playing', 20, self.DISPLAY_W/2, self.DISPLAY_H/2)
+
+    def update(self):
+        # Game loop - Update
+        self.all_sprites.update()
 
     def draw_text(self, text, size, x, y ):
         font = pygame.font.SysFont(self.font_name, size)
