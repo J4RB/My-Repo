@@ -4,8 +4,9 @@ import math
 vec = pg.math.Vector2
 
 class Player(pg.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, game):
         pg.sprite.Sprite.__init__(self)
+        self.game = game
         self.load_settings()
         self.load_images()
         self.image = pg.Surface((self.PLAYER_IMG_WIDTH, self.PLAYER_IMG_HEIGHT))
@@ -19,14 +20,13 @@ class Player(pg.sprite.Sprite):
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
         self.rotation = 90
-        self.thrusting = False
         self.current_frame = 0
         
 
     def load_settings(self):
        # game options/settings
-        self.SCREEN_WIDTH = 1802
-        self.SCREEN_HEIGHT = 980
+        self.SCREEN_WIDTH = self.game.DISPLAY_W
+        self.SCREEN_HEIGHT = self.game.DISPLAY_H
 
        # player properties
         self.PLAYER_IMG_WIDTH = 29
@@ -39,23 +39,6 @@ class Player(pg.sprite.Sprite):
 
     def load_images(self):
         self.player_sprite = pg.image.load('./images/spaceship.png')
-        self.player_sprite_thrust = pg.image.load('./images/spaceship_thrust.png')
-
-
-    def state(self):
-        if self.thrusting:
-            self.current_image = self.player_sprite_thrust
-        else:
-            self.current_image = self.player_sprite
-
-
-    # def animate(self):
-    #     now = pg.time.get_ticks()
-    #     keys = pg.key.get_pressed()
-    #     if self.thrusting:
-    #         self.current_frame = (self.current_frame + 1) % len(self.player_sprite_thrust)
-    #         self.image = self.player_sprite_thrust[self.current_frame]
-
 
     def rotate(self, image, rect, angle): # Rotate the image while keeping its center.
         # Rotate the original image without modifying it.
@@ -79,7 +62,6 @@ class Player(pg.sprite.Sprite):
         elif self.rotation < 0:
             self.rotation += 360
         
-        self.state()
         # Run the funktion 'rotate' in order to rotate the player
         self.image, self.rect = self.rotate(self.current_image, self.rect, self.rotation - 90)
 
@@ -107,7 +89,6 @@ class Player(pg.sprite.Sprite):
             self.pos.y = self.SCREEN_HEIGHT
 
     def update(self):
-        #self.animate()
         self.acc = vec(0, 0)
         # apply friction
         self.acc += self.vel * self.PLAYER_FRICTION
@@ -115,7 +96,10 @@ class Player(pg.sprite.Sprite):
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
 
+        keys = pg.key.get_pressed()
+        if keys[pg.K_UP]:
+            self.thrust()
+
         self.boarderCollisionCheck()
-        self.state()
         self.ship_rotation()
         self.rect.center = self.pos

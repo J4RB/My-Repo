@@ -14,7 +14,6 @@ class Menu():
         self.heading3_font_size = floor((self.game.DISPLAY_W + self.game.DISPLAY_H) / 50)
         self.text_font_size = floor((self.game.DISPLAY_W + self.game.DISPLAY_H) / 80)
 
-
     def draw_cursor(self):
         self.game.draw_text('*', self.heading3_font_size, self.cursor_rect.x, self.cursor_rect.y)
 
