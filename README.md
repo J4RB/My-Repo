@@ -1,2 +1,2 @@
-# My-GitHub
-This is my GitHub repository with random projects I'm working on.
+# My-Repo
+This is my GitHub repository with all sorts of projects I'm working on.
